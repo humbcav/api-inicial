@@ -1,0 +1,87 @@
+1. SQL Server (para .NET)
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SuaSenhaForte123!" \
+   -p 1433:1433 --name sqlserver \
+   -d mcr.microsoft.com/mssql/server:2022-latest
+
+"Server=localhost,1433;Database=MinhaApiDb;User Id=sa;Password=SuaSenhaForte123!"
+
+
+
+2. PostgreSQL
+docker run --name postgres-api -e POSTGRES_PASSWORD=senha123 \
+   -e POSTGRES_DB=api_db -p 5432:5432 -d postgres
+
+"Host=localhost;Port=5432;Database=api_db;Username=postgres;Password=senha123"
+
+
+3. MySQL
+docker run --name mysql-api -e MYSQL_ROOT_PASSWORD=senha123 \
+   -e MYSQL_DATABASE=api_db -p 3306:3306 -d mysql
+
+
+"Server=localhost;Database=api_db;User=root;Password=senha123;"
+
+
+Dicas úteis
+Use o Docker Desktop ou docker ps para verificar se o container está rodando.
+
+Para persistência, monte volumes com -v para salvar os dados fora do container.
+
+Pode usar o Azure Data Studio, DBeaver ou TablePlus para visualizar os dados.
+
+
+
+
+
+
+
+
+1. Usar variáveis de ambiente no Ubuntu
+Você pode definir variáveis de ambiente no terminal ou em arquivos .env.
+
+✅ Temporariamente no terminal:
+bash
+export DB_PASSWORD=MinhaSenhaSegura123
+✅ Permanentemente no .bashrc ou .zshrc:
+Adicione ao final do arquivo:
+
+bash
+export DB_PASSWORD=MinhaSenhaSegura123
+Depois, recarregue:
+
+bash
+source ~/.bashrc
+🔧 No código .NET:
+Use Environment.GetEnvironmentVariable("DB_PASSWORD") para acessar:
+
+csharp
+var senha = Environment.GetEnvironmentVariable("DB_PASSWORD");
+📦 2. Usar arquivos .env com biblioteca DotNetEnv
+Instale o pacote:
+
+bash
+dotnet add package DotNetEnv
+Crie um arquivo .env:
+
+Código
+DB_PASSWORD=MinhaSenhaSegura123
+No código:
+
+csharp
+DotNetEnv.Env.Load();
+var senha = Environment.GetEnvironmentVariable("DB_PASSWORD");
+🧰 3. Usar appsettings.json com Secrets.json (sem expor no Git)
+No appsettings.json:
+
+json
+{
+  "ConnectionStrings": {
+    "Default": "Server=localhost;Database=MinhaApiDb;User Id=sa;Password={DB_PASSWORD}"
+  }
+}
+E substitua {DB_PASSWORD} no código com a variável de ambiente ou segredo.
+
+🛡️ Dica extra: nunca suba senhas para o GitHub
+Adicione .env, secrets.json, ou qualquer arquivo com credenciais ao .gitignore
+
+Use git status para verificar antes de dar push
