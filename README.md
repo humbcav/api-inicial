@@ -21,7 +21,7 @@ Este projeto é uma API REST desenvolvida com .NET para fins de aprendizado e ex
 git clone https://github.com/seu-usuario/api-de-estudos.git
 cd api-de-estudos
 
-
+---
 ### 2. Configure variáveis de ambiente
 Crie um arquivo .env com:
 
